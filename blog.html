@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>TinyCraft | Tiny Home Living Blog & Stories</title>
+    <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=64&h=64&fit=crop">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #FFFFFF;
+            --text-primary: #111111;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --nav-bg: #FFFFFF;
+            --footer-bg: #FFFFFF;
+            --footer-text: #4B5563;
+        }
+        
+        .dark {
+            --bg-primary: #0F0F0F;
+            --text-primary: #F5F5F5;
+            --card-bg: #1F1F1F;
+            --border-color: #2A2A2A;
+            --nav-bg: #1A1A1A;
+            --footer-bg: #0A0A0A;
+            --footer-text: #9CA3AF;
+        }
+        
+        body { 
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        .logo-icon, .logo-text { color: #C19A6B !important; }
+        .logo-brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 900; letter-spacing: -0.02em; text-decoration: none; }
+        
+        nav .bg-white\/95 { background-color: var(--nav-bg) !important; backdrop-filter: blur(12px); border: 1px solid rgba(193, 154, 107, 0.2) !important; }
+        .dark nav .bg-white\/95 { background-color: #1A1A1A !important; }
+        
+        .nav-link {
+            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 8px 16px; border-radius: 8px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 6px; color: var(--text-primary) !important; white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active { background-color: #C19A6B !important; color: white !important; }
+        
+        .desktop-control-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px;
+            border-radius: 8px; font-size: 13px; font-weight: 600;
+            background: rgba(163, 177, 138, 0.2); transition: all 0.3s ease; cursor: pointer; color: var(--text-primary);
+        }
+        .desktop-control-btn:hover { background: rgba(193, 154, 107, 0.3); }
+        
+        .bg-\[\#C19A6B\] { background-color: #C19A6B !important; }
+        .bg-\[\#C19A6B\]:hover { background-color: #A87B4A !important; }
+        
+        footer {
+            background-color: var(--footer-bg) !important;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+        footer .logo-icon, footer .logo-text { color: #C19A6B !important; }
+        footer h4 { color: #C19A6B !important; font-weight: 800; letter-spacing: 0.05em; }
+        footer p, footer li, footer span, footer .text-gray-400, footer .text-gray-500 { color: var(--footer-text) !important; }
+        footer a { color: var(--footer-text) !important; transition: color 0.2s ease; }
+        footer a:hover { color: #C19A6B !important; }
+        footer .border-t { border-color: var(--border-color) !important; }
+        .contact-item i { color: #C19A6B !important; }
+        
+        [dir="rtl"] { text-align: right; direction: rtl; }
+        [dir="rtl"] .flex, [dir="rtl"] .inline-flex, [dir="rtl"] .flex-row { flex-direction: row-reverse; }
+        [dir="rtl"] .text-left { text-align: right; }
+        
+        #mobileMenu {
+            position: fixed; top: 0; bottom: 0; width: 320px;
+            background-color: var(--card-bg) !important; z-index: 110;
+            padding: 1.5rem; overflow-y: auto; transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+        }
+        html:not([dir="rtl"]) #mobileMenu { right: 0; left: auto; transform: translateX(100%); }
+        html[dir="rtl"] #mobileMenu { left: 0; right: auto; transform: translateX(-100%); }
+        #mobileMenu.open { transform: translateX(0) !important; }
+        
+        /* Responsive breakpoints: hide desktop nav links & controls on tablet & mobile, show hamburger */
+        /* For 1024px width devices (both 1366 and 768 heights) hamburger is visible */
+        @media (max-width: 1279px) {
+            .desktop-nav-links {
+                display: none !important;
+            }
+            .desktop-controls-wrapper {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+        
+        /* XL screens: show desktop navigation and controls */
+        @media (min-width: 1280px) {
+            .desktop-nav-links {
+                display: flex !important;
+            }
+            .desktop-controls-wrapper {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+        
+        /* Additional fix for 1024px specific: ensure hamburger is visible and navbar spacing is neat */
+        @media (min-width: 1024px) and (max-width: 1279px) {
+            .desktop-nav-links, .desktop-controls-wrapper {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+            nav .max-w-\[1400px\] {
+                padding: 0.5rem 1rem;
+            }
+            .logo-brand span.text-2xl {
+                font-size: 1.6rem;
+            }
+        }
+        
+        .dropdown-content { display: none; background-color: var(--card-bg) !important; border: 1px solid var(--border-color); }
+        .dropdown-content.show { display: block; }
+        
+        .mobile-nav-link {
+            font-size: 14px; font-weight: 600; padding: 12px 16px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: space-between; width: 100%;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-primary) !important; background: transparent; border: none; cursor: pointer;
+        }
+        .mobile-nav-link:hover { background-color: #C19A6B !important; color: white !important; }
+        .mobile-submenu { display: none; flex-direction: column; padding-left: 1rem; border-left: 2px solid rgba(193, 154, 107, 0.4); }
+        [dir="rtl"] .mobile-submenu { padding-left: 0; padding-right: 1rem; border-left: none; border-right: 2px solid rgba(193, 154, 107, 0.4); }
+        .mobile-submenu.open { display: flex; }
+        .control-btn { width: 100%; padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; background: rgba(193, 154, 107, 0.1); border: 1px solid rgba(193, 154, 107, 0.2); cursor: pointer; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out; }
+        body.menu-open { overflow: hidden; }
+        
+        .blog-card {
+            transition: all 0.4s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+        }
+        .category-badge {
+            background: rgba(193, 154, 107, 0.15);
+            backdrop-filter: blur(4px);
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-lineclamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .hero-section {
+            position: relative;
+        }
+    </style>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#C19A6B', sage: '#A3B18A' } } } }
+    </script>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION BAR - Perfect alignment for 1024x1366 & 1024x768 (Hamburger visible) ===== -->
+   <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
+            <a href="#" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 logo-icon"></i>
+                <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            
+            <!-- Desktop Navigation Links - Hidden on screens <= 1279px (including 1024px) -->
+            <div class="desktop-nav-links hidden lg:flex items-center gap-1 xl:gap-2">
+                <div class="relative"><button onclick="toggleDropdown('homeMenu', event)" class="nav-link">Home <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+                    <div id="homeMenu" class="dropdown-content absolute top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden">
+                        <a href="#" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home1</a>
+                        <a href="#" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="ourhomes.html" class="nav-link">Our Homes</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="blog.html"class="nav-link active">Blog</a>
+                <a href="design.html" class="nav-link">Designs</a>
+                <a href="faq.html" class="nav-link">Faq</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <!-- Desktop Controls: RTL, Dark Mode, Login/Signup (Hidden on tablet/mobile including 1024px) -->
+            <div class="desktop-controls-wrapper hidden xl:flex items-center gap-2">
+                <button onclick="toggleDirection()" class="desktop-control-btn">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    <span id="dirTextDesktop">LTR</span>
+                </button>
+                <button onclick="toggleTheme()" class="desktop-control-btn">
+                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+                    <span class="dark:hidden">Dark</span>
+                    <span class="hidden dark:inline">Light</span>
+                </button>
+                <div class="relative">
+                    <button onclick="toggleDropdown('userMenuDesktop', event)" class="desktop-control-btn">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span>Account</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div id="userMenuDesktop" class="dropdown-content absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden z-50">
+                        <a href="login.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">LOGIN</a>
+                        <a href="register.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">SIGNUP</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button - Visible on all screens below 1280px (including 1024x1366 and 1024x768) -->
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn xl:hidden p-2 sm:p-2.5 text-black dark:text-white bg-sage/20 rounded-lg hover:bg-sage/40 transition">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU (off-canvas) -->
+    <div id="mobileMenu" class="bg-white dark:bg-gray-900 shadow-2xl">
+        <div class="flex justify-between items-center mb-6">
+            <a href="index.html" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 logo-icon"></i>
+                <span class="text-2xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            <button onclick="toggleMobileMenu()" class="p-2 bg-sage/20 rounded-full hover:bg-sage/40">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <button onclick="toggleMobileSubmenu('mobileHomeSub')" class="mobile-nav-link">
+            <span>Home</span> <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </button>
+        <div id="mobileHomeSub" class="mobile-submenu">
+            <a href="index.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home1</a>
+            <a href="home2.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home2</a>
+        </div>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <a href="ourhomes.html" class="mobile-nav-link">Our Homes</a>
+        <a href="service.html" class="mobile-nav-link">Services</a>
+        <a href="blog.html" class="mobile-nav-link bg-[#C19A6B]/20 text-[#C19A6B]">Blog</a>
+        <a href="design.html" class="mobile-nav-link">Designs</a>
+        <a href="faq.html" class="mobile-nav-link">Faq</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        
+        <div class="h-px bg-sage/30 my-3"></div>
+        
+        <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="user-circle" class="w-4 h-4"></i> Account</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </div>
+        <div id="mobileAuthSub" class="mobile-submenu">
+            <a href="login.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="log-in" class="w-4 h-4"></i> Login</a>
+            <a href="register.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up</a>
+        </div>
+        
+        <div class="control-btn" onclick="toggleDirectionMobile()">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode</span>
+            <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
+        </div>
+        
+        <div class="control-btn" onclick="toggleTheme()">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="moon" class="w-4 h-4 dark:hidden"></i><i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i> Dark Mode</span>
+            <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
+        </div>
+    </div>
+
+    <!-- BLOG HERO SECTION -->
+    <section class="hero-section relative min-h-[50vh] w-full flex items-center justify-center overflow-hidden pt-28">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=1920&h=600&fit=crop" class="w-full h-full object-cover" alt="Tiny home blog">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C19A6B]/40 backdrop-blur-sm border border-[#C19A6B]/60 text-white mx-auto mb-6">
+                <i data-lucide="newspaper" class="w-4 h-4"></i>
+                <span class="text-xs font-bold uppercase tracking-wider">Inspiration & Insights</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">Tiny Living <span class="text-[#C19A6B]">Stories</span></h1>
+            <p class="text-white/90 text-lg max-w-2xl mx-auto">Discover minimalist design tips, sustainability guides, and real tiny home journeys.</p>
+        </div>
+    </section>
+
+    <!-- BLOG GRID SECTION - DYNAMIC CARDS WITH DETAILS LINK -->
+    <section class="py-24" style="background-color: var(--bg-primary);">
+        <div class="container mx-auto px-4 max-w-[1300px]">
+            <div class="text-center mb-16">
+                <i data-lucide="book-open" class="w-14 h-14 text-[#C19A6B] mx-auto mb-4"></i>
+                <h2 class="text-3xl md:text-4xl font-extrabold" style="color: var(--text-primary);">Latest from the Journal</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Expert advice, client stories, and tiny home innovations</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+                <!-- Blog posts will be dynamically injected -->
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION -->
+    <section class="py-20 bg-[#C19A6B]/10">
+        <div class="container mx-auto px-4 max-w-[1300px] text-center">
+            <i data-lucide="mail" class="w-12 h-12 text-[#C19A6B] mx-auto mb-4"></i>
+            <h2 class="text-3xl font-bold mb-3">Join the Tiny Movement</h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-8">Get weekly inspiration, design tips, and exclusive tiny home offers.</p>
+            <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input type="email" placeholder="Your email address" class="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 flex-1">
+                <button class="px-6 py-3 bg-[#C19A6B] text-white rounded-xl font-bold hover:bg-[#A87B4A] transition">Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-gray-900 pt-16 pb-8">
+        <div class="container mx-auto px-4 md:px-8 max-w-[1300px]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <a href="index.html" class="logo-brand flex items-center gap-2">
+                        <i data-lucide="home" class="w-8 h-8 logo-icon"></i>
+                        <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+                    </a>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Designing sustainable tiny homes with soul — natural wood, earthy tones, and modern minimalism.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">About Us</a></li>
+                        <li><a href="ourhomes.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Our Homes</a></li>
+                        <li><a href="service.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Services</a></li>
+                        <li><a href="contact.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Tiny Home Guide</a></li>
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Financing Options</a></li>
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Workshops</a></li>
+                        <li><a href="blog.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Contact</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-start contact-item"><i data-lucide="phone" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i><span class="text-gray-500 dark:text-gray-400 text-sm">+1 (888) 553-9842</span></li>
+                        <li class="flex gap-3 items-start contact-item"><i data-lucide="mail" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i><span class="text-gray-500 dark:text-gray-400 text-sm">hello@tinycraft.com</span></li>
+                        <li class="flex gap-3 items-start contact-item"><i data-lucide="map-pin" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i><span class="text-gray-500 dark:text-gray-400 text-sm">Portland, OR & Remote</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 dark:text-gray-500 text-xs font-medium">© 2026 TinyCraft — Sustainable Tiny Home Builders. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Terms of Service</a>
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Blog Data with HD Images (all images intact)
+        const blogPosts = [
+            {
+                id: 1,
+                title: "10 Smart Storage Ideas for Tiny Homes",
+                excerpt: "Maximize every square inch with these innovative storage solutions that blend style and function seamlessly.",
+                image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&h=500&fit=crop",
+                category: "Design Tips",
+                date: "March 15, 2026",
+                readTime: "5 min read",
+                content: "<p>Living tiny doesn't mean sacrificing comfort. From hidden stair drawers to magnetic spice racks, discover how to organize your space beautifully.</p><h2>Multi-Purpose Furniture</h2><p>Ottomans with storage, fold-down desks, and convertible sofas are game-changers for tiny spaces.</p><img src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=400&fit=crop' class='rounded-xl my-6'><h2>Vertical Storage</h2><p>Use wall space wisely with floating shelves, pegboards, and ceiling-mounted racks.</p>"
+            },
+            {
+                id: 2,
+                title: "Off-Grid Living: Solar & Water Systems Guide",
+                excerpt: "Everything you need to know about powering your tiny home sustainably with solar panels and rainwater collection.",
+                image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=500&fit=crop",
+                category: "Sustainability",
+                date: "March 8, 2026",
+                readTime: "7 min read",
+                content: "<p>Embrace energy independence with modern solar solutions and efficient water systems designed for tiny homes.</p><h2>Solar Panel Setup</h2><p>Learn about battery banks, inverters, and calculating your energy needs.</p><h2>Rainwater Harvesting</h2><p>Filtered rainwater systems can supply all your household needs with proper setup.</p>"
+            },
+            {
+                id: 3,
+                title: "Minimalist Kitchen Design That Wows",
+                excerpt: "Compact doesn't mean cramped. See how clever layouts and premium materials create stunning tiny kitchens.",
+                image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&h=500&fit=crop",
+                category: "Interior",
+                date: "February 28, 2026",
+                readTime: "4 min read",
+                content: "<p>Small kitchens can be both beautiful and functional with the right approach to layout and appliances.</p><h2>Space-Saving Appliances</h2><p>Induction cooktops, compact dishwashers, and drawer refrigerators maximize space.</p>"
+            },
+            {
+                id: 4,
+                title: "Client Story: From City Apartment to Tiny Homestead",
+                excerpt: "Meet Sarah and Tom who traded their 800 sqft rental for a custom 320 sqft tiny home on 5 acres.",
+                image: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&h=500&fit=crop",
+                category: "Stories",
+                date: "February 20, 2026",
+                readTime: "6 min read",
+                content: "<p>Real-life journey of downsizing, embracing minimalism, and finding freedom in tiny living.</p>"
+            },
+            {
+                id: 5,
+                title: "Top 5 Tiny Home Floor Plans for Families",
+                excerpt: "Yes, families can thrive in tiny spaces! Explore layouts designed for 3-4 people with privacy and flow.",
+                image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&h=500&fit=crop",
+                category: "Floor Plans",
+                date: "February 12, 2026",
+                readTime: "8 min read",
+                content: "<p>Discover bunk rooms, split lofts, and clever zoning techniques for family-friendly tiny homes.</p>"
+            },
+            {
+                id: 6,
+                title: "Eco-Friendly Materials We Love",
+                excerpt: "From reclaimed barn wood to low-VOC paints, explore our sustainable material palette.",
+                image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=500&fit=crop",
+                category: "Materials",
+                date: "February 5, 2026",
+                readTime: "4 min read",
+                content: "<p>Our commitment to the planet starts with carefully selected sustainable building materials.</p>"
+            }
+        ];
+        
+        function renderBlogCards() {
+            const grid = document.getElementById('blogGrid');
+            if (!grid) return;
+            grid.innerHTML = blogPosts.map(post => `
+                <div class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 flex flex-col h-full">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=500&fit=crop'">
+                        <div class="absolute top-4 left-4"><span class="category-badge px-3 py-1 rounded-full text-xs font-bold text-[#C19A6B] bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">${post.category}</span></div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                            <span><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>${post.date}</span>
+                            <span><i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>${post.readTime}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 hover:text-[#C19A6B] transition-colors cursor-pointer" onclick="openBlogDetail(${post.id})">${post.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-5 line-clamp-3">${post.excerpt}</p>
+                        <div class="mt-auto">
+                            <button onclick="openBlogDetail(${post.id})" class="inline-flex items-center gap-2 text-[#C19A6B] font-semibold hover:gap-3 transition-all group">
+                                Read Full Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+        
+        function openBlogDetail(postId) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (!post) return;
+            localStorage.setItem('selectedBlog', JSON.stringify(post));
+            window.location.href = 'blog-detail.html';
+        }
+        
+        function toggleDropdown(menuId, e) { 
+            if(e) e.stopPropagation(); 
+            document.querySelectorAll('.dropdown-content').forEach(d => { if(d.id !== menuId) d.classList.remove('show'); }); 
+            const m = document.getElementById(menuId); 
+            if(m) m.classList.toggle('show'); 
+        }
+        window.addEventListener('click', () => { document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show')); });
+        
+        function toggleMobileMenu() { 
+            const mm = document.getElementById('mobileMenu'); 
+            mm.classList.toggle('open'); 
+            document.body.classList.toggle('menu-open', mm.classList.contains('open'));
+        }
+        
+        function toggleMobileSubmenu(id) { 
+            const sub = document.getElementById(id); 
+            const parentBtn = sub?.previousElementSibling; 
+            const icon = parentBtn?.querySelector('i[data-lucide="chevron-down"]'); 
+            sub?.classList.toggle('open'); 
+            if(icon) icon.style.transform = sub.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; 
+            setTimeout(() => lucide.createIcons(), 10); 
+        }
+        
+        function toggleTheme() { 
+            document.documentElement.classList.toggle('dark'); 
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); 
+            setTimeout(() => lucide.createIcons(), 10); 
+        }
+        
+        function toggleDirection() {
+            const html = document.documentElement;
+            const dirTextDesktop = document.getElementById('dirTextDesktop');
+            const mobileDirText = document.getElementById('mobileDirText');
+            if (html.dir === 'rtl') {
+                html.dir = 'ltr';
+                if(dirTextDesktop) dirTextDesktop.innerText = 'LTR';
+                if(mobileDirText) mobileDirText.innerText = 'LTR';
+            } else {
+                html.dir = 'rtl';
+                if(dirTextDesktop) dirTextDesktop.innerText = 'RTL';
+                if(mobileDirText) mobileDirText.innerText = 'RTL';
+            }
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+        function toggleDirectionMobile() { toggleDirection(); }
+        
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBlogCards();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

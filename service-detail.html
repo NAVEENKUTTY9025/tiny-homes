@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>TinyCraft | Service Details - Premium Tiny Home Solutions</title>
+    <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=64&h=64&fit=crop">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Light mode (default) */
+        :root {
+            --bg-primary: #FFFFFF;
+            --text-primary: #111111;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --nav-bg: #FFFFFF;
+            --footer-bg: #FFFFFF;
+            --footer-text: #4B5563;
+        }
+        
+        /* Dark mode */
+        .dark {
+            --bg-primary: #0F0F0F;
+            --text-primary: #F5F5F5;
+            --card-bg: #1F1F1F;
+            --border-color: #2A2A2A;
+            --nav-bg: #1A1A1A;
+            --footer-bg: #0A0A0A;
+            --footer-text: #9CA3AF;
+        }
+        
+        body { 
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        /* Brand colors */
+        .logo-icon, .logo-text {
+            color: #C19A6B !important;
+        }
+        
+        .logo-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+        
+        /* Navigation */
+        nav .bg-white\/95 {
+            background-color: var(--nav-bg) !important;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(193, 154, 107, 0.2) !important;
+        }
+        
+        .dark nav .bg-white\/95 {
+            background-color: #1A1A1A !important;
+        }
+        
+        .nav-link {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-primary) !important;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: #C19A6B !important;
+            color: white !important;
+        }
+        
+        .desktop-control-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(163, 177, 138, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+        
+        .desktop-control-btn:hover {
+            background: rgba(193, 154, 107, 0.3);
+        }
+        
+        /* Headings color */
+        h1, h2, h3, h4, .text-\[\#C19A6B\] {
+            color: #C19A6B !important;
+        }
+        
+        /* Buttons */
+        .bg-\[\#C19A6B\] {
+            background-color: #C19A6B !important;
+        }
+        .bg-\[\#C19A6B\]:hover {
+            background-color: #A87B4A !important;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg) !important;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        footer .logo-icon, 
+        footer .logo-text {
+            color: #C19A6B !important;
+        }
+        
+        footer h4 {
+            color: #C19A6B !important;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+        
+        footer p, 
+        footer li, 
+        footer span,
+        footer .text-gray-400,
+        footer .text-gray-500 {
+            color: var(--footer-text) !important;
+        }
+        
+        footer a {
+            color: var(--footer-text) !important;
+            transition: color 0.2s ease;
+        }
+        
+        footer a:hover {
+            color: #C19A6B !important;
+        }
+        
+        footer .border-t {
+            border-color: var(--border-color) !important;
+        }
+        
+        .contact-item i {
+            color: #C19A6B !important;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] { text-align: right; direction: rtl; }
+        [dir="rtl"] .flex, [dir="rtl"] .inline-flex, [dir="rtl"] .flex-row { flex-direction: row-reverse; }
+        [dir="rtl"] .flex-col { flex-direction: column; }
+        [dir="rtl"] .justify-start { justify-content: flex-end; }
+        [dir="rtl"] .justify-end { justify-content: flex-start; }
+        [dir="rtl"] .text-left { text-align: right; }
+        [dir="rtl"] .text-right { text-align: left; }
+        [dir="rtl"] .ml-auto { margin-left: 0; margin-right: auto; }
+        [dir="rtl"] .mr-auto { margin-right: 0; margin-left: auto; }
+        [dir="rtl"] .contact-item { flex-direction: row-reverse; }
+        [dir="rtl"] .contact-item i { margin-left: 0.75rem; margin-right: 0; }
+        
+        /* Mobile Menu */
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 320px;
+            background-color: var(--card-bg) !important;
+            z-index: 110;
+            padding: 1.5rem;
+            overflow-y: auto;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+        }
+        html:not([dir="rtl"]) #mobileMenu {
+            right: 0;
+            left: auto;
+            transform: translateX(100%);
+        }
+        html[dir="rtl"] #mobileMenu {
+            left: 0;
+            right: auto;
+            transform: translateX(-100%);
+        }
+        #mobileMenu.open {
+            transform: translateX(0) !important;
+        }
+        
+        /* Responsive Nav: Hide desktop nav links and controls on tablets & below, show hamburger */
+        @media (max-width: 1279px) {
+            .desktop-nav-links {
+                display: none !important;
+            }
+            .desktop-controls-wrapper {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+        
+        /* Large desktop: show desktop nav links and controls, hide hamburger */
+        @media (min-width: 1280px) {
+            .desktop-nav-links {
+                display: flex !important;
+            }
+            .desktop-controls-wrapper {
+                display: flex !important;
+                align-items: center;
+                gap: 8px;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+            #mobileMenu {
+                display: none !important;
+            }
+        }
+        
+        /* Tablet specific (1024px) fine-tuning: ensure nav bar has proper spacing and hamburger is visible */
+        @media (min-width: 768px) and (max-width: 1279px) {
+            nav .max-w-1400px {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .logo-brand span {
+                font-size: 1.5rem;
+            }
+            .logo-brand i {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+        }
+        
+        .dropdown-content {
+            display: none;
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border-color);
+        }
+        .dropdown-content.show { display: block; }
+        
+        .mobile-nav-link {
+            font-size: 14px; font-weight: 600; padding: 12px 16px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: space-between; width: 100%;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-primary) !important;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .mobile-nav-link:hover { background-color: #C19A6B !important; color: white !important; }
+        .mobile-submenu {
+            display: none; flex-direction: column; padding-left: 1rem;
+            border-left: 2px solid rgba(193, 154, 107, 0.4);
+        }
+        [dir="rtl"] .mobile-submenu {
+            padding-left: 0; padding-right: 1rem;
+            border-left: none; border-right: 2px solid rgba(193, 154, 107, 0.4);
+        }
+        .mobile-submenu.open { display: flex; }
+        .mobile-submenu a {
+            padding: 12px 16px; border-radius: 8px;
+            color: var(--text-primary) !important;
+        }
+        .mobile-submenu a:hover { background-color: #C19A6B !important; color: white !important; }
+        
+        .control-btn {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(193, 154, 107, 0.1);
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(193, 154, 107, 0.2);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out; }
+        body.menu-open { overflow: hidden; }
+        
+        /* Service Detail Page Specific Styles */
+        .service-detail-hero {
+            position: relative;
+            min-height: 65vh;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .feature-list li i {
+            color: #C19A6B;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        .breadcrumb a {
+            transition: color 0.2s ease;
+        }
+        .breadcrumb a:hover {
+            color: #C19A6B !important;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(193, 154, 107, 0.3);
+            border-radius: 50%;
+            border-top-color: #C19A6B;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#C19A6B', sage: '#A3B18A', wood: '#C19A6B' } } } }
+    </script>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION BAR (FIXED RESPONSIVE: HAMBURGER VISIBLE ON TABLET 1024px) ===== -->
+   <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
+            <a href="#" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 logo-icon"></i>
+                <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            
+            <!-- Desktop Navigation Links -->
+           <div class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <div class="relative"><button onclick="toggleDropdown('homeMenu', event)" class="nav-link">Home <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+                    <div id="homeMenu" class="dropdown-content absolute top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden">
+                        <a href="index.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home1</a>
+                        <a href="home2.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="ourhomes.html" class="nav-link">Our Homes</a>
+                <a href="service.html"class="nav-link active">Services</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="design.html" class="nav-link">Designs</a>
+                <a href="faq.html" class="nav-link ">Faq</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <!-- Desktop Controls: RTL, Dark Mode, Login/Signup (Visible only on desktop) -->
+            <div class="desktop-controls-wrapper hidden xl:flex items-center gap-2">
+                <!-- RTL Toggle -->
+                <button onclick="toggleDirection()" class="desktop-control-btn">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    <span id="dirTextDesktop">LTR</span>
+                </button>
+                
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()" class="desktop-control-btn">
+                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+                    <span class="dark:hidden">Dark</span>
+                    <span class="hidden dark:inline">Light</span>
+                </button>
+                
+                <!-- Login/Signup Dropdown -->
+                <div class="relative">
+                    <button onclick="toggleDropdown('userMenuDesktop', event)" class="desktop-control-btn">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span>Account</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div id="userMenuDesktop" class="dropdown-content absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden z-50">
+                        <a href="login.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">LOGIN</a>
+                        <a href="register.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">SIGNUP</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn xl:hidden p-2 sm:p-2.5 text-black dark:text-white bg-sage/20 rounded-lg hover:bg-sage/40 transition">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU (SAME AS INDEX) -->
+    <div id="mobileMenu" class="bg-white dark:bg-gray-900 shadow-2xl">
+        <div class="flex justify-between items-center mb-6">
+            <a href="index.html" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 logo-icon"></i>
+                <span class="text-2xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            <button onclick="toggleMobileMenu()" class="p-2 bg-sage/20 rounded-full hover:bg-sage/40">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <button onclick="toggleMobileSubmenu('mobileHomeSub')" class="mobile-nav-link">
+            <span>Home</span> <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </button>
+        <div id="mobileHomeSub" class="mobile-submenu open">
+            <a href="index.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home1</a>
+            <a href="home2.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home2</a>
+        </div>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <a href="ourhomes.html" class="mobile-nav-link">Our Homes</a>
+        <a href="service.html" class="mobile-nav-link">Services</a>
+        <a href="blog.html" class="mobile-nav-link">Blog</a>
+        <a href="design.html" class="mobile-nav-link">Designs</a>
+        <a href="faq.html" class="mobile-nav-link">Faq</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        <div class="h-px bg-sage/30 my-3"></div>
+        <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="user-circle" class="w-4 h-4"></i> Account</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </div>
+        <div id="mobileAuthSub" class="mobile-submenu">
+            <a href="login.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="log-in" class="w-4 h-4"></i> Login</a>
+            <a href="register.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium"><i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up</a>
+        </div>
+        <div class="control-btn" onclick="toggleDirectionMobile()">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode</span>
+            <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
+        </div>
+        <div class="control-btn" onclick="toggleTheme()">
+            <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="moon" class="w-4 h-4 dark:hidden"></i><i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i> Dark Mode</span>
+            <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
+        </div>
+    </div>
+
+    <!-- DYNAMIC SERVICE DETAIL CONTENT -->
+    <main id="serviceDetailContent">
+        <!-- Loading State -->
+        <div id="loadingState" class="min-h-screen flex items-center justify-center pt-32">
+            <div class="text-center">
+                <div class="loading-spinner mx-auto mb-4"></div>
+                <p class="text-gray-500 dark:text-gray-400">Loading service details...</p>
+            </div>
+        </div>
+        
+        <!-- Error State -->
+        <div id="errorState" class="min-h-screen flex items-center justify-center pt-32 hidden">
+            <div class="text-center max-w-md mx-auto px-4">
+                <i data-lucide="alert-circle" class="w-16 h-16 text-red-500 mx-auto mb-4"></i>
+                <h2 class="text-2xl font-bold mb-2">Service Not Found</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">The service you're looking for doesn't exist or has been removed.</p>
+                <a href="service.html" class="inline-flex items-center gap-2 bg-[#C19A6B] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#A87B4A] transition">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Services
+                </a>
+            </div>
+        </div>
+        
+        <!-- Dynamic Content will be injected here -->
+        <div id="dynamicContent"></div>
+    </main>
+
+    <!-- FOOTER (SAME AS INDEX) -->
+    <footer class="bg-white dark:bg-gray-900 pt-16 pb-8">
+        <div class="container mx-auto px-4 md:px-8 max-w-[1300px]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <a href="index.html" class="logo-brand flex items-center gap-2">
+                        <i data-lucide="home" class="w-8 h-8 logo-icon"></i>
+                        <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+                    </a>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Designing sustainable tiny homes with soul — natural wood, earthy tones, and modern minimalism.</p>
+                </div>
+                <div><h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Company</h4>
+                    <ul class="space-y-3"><li><a href="about.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">About Us</a></li>
+                    <li><a href="ourhomes.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Our Homes</a></li>
+                    <li><a href="service.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Services</a></li>
+                    <li><a href="contact.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Contact</a></li></ul>
+                </div>
+                <div><h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Resources</h4>
+                    <ul class="space-y-3"><li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Tiny Home Guide</a></li>
+                    <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Financing</a></li>
+                    <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Workshops</a></li>
+                    <li><a href="blog.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] text-sm font-medium">Blog</a></li></ul>
+                </div>
+                <div><h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Contact</h4>
+                    <ul class="space-y-4"><li class="flex gap-3 items-start contact-item"><i data-lucide="phone" class="w-5 h-5 text-[#C19A6B] shrink-0"></i><span class="text-gray-500 dark:text-gray-400 text-sm">+1 (888) 553-9842</span></li>
+                    <li class="flex gap-3 items-start contact-item"><i data-lucide="mail" class="w-5 h-5 text-[#C19A6B] shrink-0"></i><span class="text-gray-500 dark:text-gray-400 text-sm">hello@tinycraft.com</span></li>
+                    <li class="flex gap-3 items-start contact-item"><i data-lucide="map-pin" class="w-5 h-5 text-[#C19A6B] shrink-0"></i><span class="text-gray-500 dark:text-gray-400 text-sm">Portland, OR & Remote</span></li></ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 dark:text-gray-500 text-xs font-medium">© 2026 TinyCraft — Sustainable Tiny Home Builders. All Rights Reserved.</p>
+                <div class="flex gap-6"><a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] text-xs font-medium">Privacy</a><a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] text-xs font-medium">Terms</a><a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] text-xs font-medium">Sitemap</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Complete services data matching service.html
+        const servicesData = {
+            "custom-design": {
+                id: "custom-design",
+                title: "Custom Tiny Home Design",
+                icon: "ruler",
+                heroImg: "https://images.unsplash.com/photo-1583608205997-8c1d4d8c8a6f?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1583608205997-8c1d4d8c8a6f?w=1200&h=800&fit=crop",
+                desc: "Personalized architectural blueprints tailored to your lifestyle, land, and budget. Every inch optimized for comfort and functionality.",
+                fullDesc: "Our custom design service begins with understanding your unique vision. We create personalized architectural blueprints that reflect your lifestyle, whether you need a remote cabin, a family tiny home, or a mobile workspace. Our award-winning designers use biophilic principles and smart space planning to maximize every square foot. From initial concept sketches to detailed construction drawings, we ensure your dream home is both beautiful and practical. We collaborate closely with you throughout the design process, offering 3D renderings and virtual walkthroughs so you can experience your space before construction begins.",
+                features: ["3D Renderings & VR Walkthroughs", "Personalized Floorplans & Loft Designs", "Multi-functional & Convertible Spaces", "Permit-Ready Construction Drawings", "Material Selection & Finishes", "Energy-Efficient Layouts", "ADA Accessible Options", "Furniture Layout Planning"]
+            },
+            "full-build": {
+                id: "full-build",
+                title: "Full Build & Construction",
+                icon: "hammer",
+                heroImg: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&h=800&fit=crop",
+                desc: "End-to-end construction using premium sustainable materials, with meticulous craftsmanship and on-time delivery.",
+                fullDesc: "Our full build service handles everything from foundation to finishing touches. We use premium sustainable materials including FSC-certified timber, non-toxic insulation, and high-efficiency windows. Our skilled craftsmen bring decades of experience in tiny home construction, ensuring structural integrity, beautiful finishes, and attention to every detail. We manage the entire process, keeping you updated at every milestone. Each home is built in our climate-controlled facility to ensure quality and consistency, then delivered and installed at your chosen location.",
+                features: ["Steel & Wood Framing Options", "Premium Sustainable Materials", "Smart Home Integration", "12-16 Week Build Time", "Quality Assurance Inspections", "Turnkey Delivery", "Climate-Controlled Construction", "5-Year Craftsmanship Warranty"]
+            },
+            "off-grid": {
+                id: "off-grid",
+                title: "Off-Grid Consultation",
+                icon: "sun",
+                heroImg: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&h=800&fit=crop",
+                desc: "Achieve energy independence with solar, water harvesting, and composting systems engineered for tiny homes.",
+                fullDesc: "Our off-grid specialists help you achieve true energy independence. We design complete systems tailored to your climate and energy needs, from solar arrays with battery storage to rainwater harvesting and greywater recycling. Our consultations cover passive solar design, composting toilet systems, and propane alternatives. We'll help you navigate the technical aspects and find the right balance between self-sufficiency and comfort. Our team provides detailed system specifications, installation guidance, and ongoing support to ensure your off-grid lifestyle is sustainable and worry-free.",
+                features: ["Solar Array Design & Installation", "Rainwater Collection Systems", "Composting Toilets (Various Models)", "Battery Storage Solutions", "Propane vs Electric Analysis", "Passive Heating/Cooling Strategies", "Greywater Recycling Systems", "Energy Consumption Audits"]
+            },
+            "interior-styling": {
+                id: "interior-styling",
+                title: "Interior & Space Styling",
+                icon: "palette",
+                heroImg: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&h=800&fit=crop",
+                desc: "Biophilic interior design that maximizes light, storage, and brings organic warmth with curated materials.",
+                fullDesc: "Our interior design team specializes in making small spaces feel spacious and serene. We use biophilic design principles to connect your home with nature through natural light, organic materials, and living elements. Every design maximizes storage without sacrificing aesthetics, featuring custom millwork, hidden compartments, and multi-purpose furniture. We'll curate a cohesive palette that reflects your personality while maintaining the warm, earthy TinyCraft aesthetic. From furniture selection to decorative accents, we ensure every element serves a purpose while creating a harmonious living environment.",
+                features: ["Custom Millwork & Built-ins", "Sustainable Furniture Sourcing", "Color & Material Consultation", "Smart Storage Solutions", "Lighting Design", "Textile & Decor Selection", "Space Planning & Flow", "Indoor Plant Integration"]
+            },
+            "permitting": {
+                id: "permitting",
+                title: "Land & Permitting Support",
+                icon: "file-text",
+                heroImg: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop",
+                desc: "Navigate zoning laws, building codes, and utility connections with our expert permit specialists.",
+                fullDesc: "Navigating zoning laws and building codes is often the most challenging part of tiny home ownership. Our permitting specialists have extensive experience with municipalities nationwide. We help you understand local regulations, prepare permit applications, and liaise with planning departments. Whether you're placing an ADU in a backyard or establishing an off-grid homestead, we ensure your project is fully compliant from day one. Our team stays current with changing regulations and can help you identify the best locations for your tiny home based on your specific needs.",
+                features: ["Zoning & Code Analysis", "Permit Application Preparation", "Utility Hookup Coordination", "ADU & Accessory Structure Specialists", "Variance Support", "Inspections Liaison", "Site Selection Assistance", "HOA & Covenant Review"]
+            },
+            "maintenance": {
+                id: "maintenance",
+                title: "Tiny Home Maintenance",
+                icon: "wrench",
+                heroImg: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920&h=1080&fit=crop",
+                img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=800&fit=crop",
+                desc: "Annual inspections, roof sealing, and system tune-ups to keep your tiny home in pristine condition.",
+                fullDesc: "Protect your investment with our comprehensive maintenance plans. We offer annual inspections that cover structural integrity, roof condition, plumbing systems, electrical safety, and appliance performance. Our technicians provide preventive maintenance including roof sealing, window weatherproofing, and system tune-ups. With priority scheduling and detailed service reports, you'll have peace of mind knowing your tiny home stays in perfect condition year after year. We also offer emergency repair services and seasonal preparation checklists to ensure your home is ready for any weather.",
+                features: ["Annual Comprehensive Inspections", "Roof & Siding Maintenance", "Plumbing & Electrical Checks", "Weatherproofing & Insulation Audit", "Appliance Servicing", "Priority Emergency Support", "Seasonal Preparation Checklists", "Maintenance History Tracking"]
+            }
+        };
+        
+        // Get service ID from URL parameter
+        function getServiceIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // Render the service detail page
+        function renderServiceDetail() {
+            const serviceId = getServiceIdFromUrl();
+            const loadingState = document.getElementById('loadingState');
+            const errorState = document.getElementById('errorState');
+            const dynamicContent = document.getElementById('dynamicContent');
+            
+            if (!serviceId || !servicesData[serviceId]) {
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                dynamicContent.innerHTML = '';
+                lucide.createIcons();
+                return;
+            }
+            
+            const service = servicesData[serviceId];
+            
+            loadingState.classList.add('hidden');
+            errorState.classList.add('hidden');
+            
+            const featuresHtml = service.features.map(feature => `
+                <li>
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-[#C19A6B]"></i>
+                    <span class="text-gray-700 dark:text-gray-300">${feature}</span>
+                </li>
+            `).join('');
+            
+            dynamicContent.innerHTML = `
+                <section class="service-detail-hero relative min-h-[60vh] w-full flex items-end pb-16 pt-32 overflow-hidden">
+                    <div class="absolute inset-0 z-0">
+                        <img src="${service.heroImg}" class="w-full h-full object-cover" alt="${service.title}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/40"></div>
+                    </div>
+                    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div class="max-w-4xl">
+                            <div class="breadcrumb flex items-center gap-2 text-white/80 text-sm mb-4">
+                                <a href="index.html" class="hover:text-[#C19A6B] transition">Home</a>
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                <a href="service.html" class="hover:text-[#C19A6B] transition">Services</a>
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                <span class="text-white">${service.title}</span>
+                            </div>
+                            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg">${service.title}</h1>
+                            <p class="text-white/90 text-lg md:text-xl max-w-2xl mt-6 drop-shadow">${service.desc}</p>
+                            <div class="flex flex-wrap gap-4 mt-8">
+                                <a href="contact.html" class="inline-flex items-center gap-2 bg-[#C19A6B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#A87B4A] transition transform hover:scale-105">
+                                    Request Consultation <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </a>
+                                <a href="service.html" class="inline-flex items-center gap-2 border-2 border-white/70 text-white px-8 py-3 rounded-xl font-bold hover:bg-white/20 transition">
+                                    <i data-lucide="arrow-left" class="w-5 h-5"></i> All Services
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="py-20" style="background-color: var(--bg-primary);">
+                    <div class="container mx-auto px-4 max-w-[1300px]">
+                        <div class="grid lg:grid-cols-3 gap-12">
+                            <div class="lg:col-span-2">
+                                <div class="prose prose-lg dark:prose-invert max-w-none">
+                                    <h2 class="text-2xl md:text-3xl font-bold text-[#C19A6B] mb-6">About This Service</h2>
+                                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">${service.fullDesc}</p>
+                                </div>
+                                <div class="mt-12">
+                                    <h2 class="text-2xl md:text-3xl font-bold text-[#C19A6B] mb-6">Why Choose TinyCraft?</h2>
+                                    <div class="grid sm:grid-cols-2 gap-6">
+                                        <div class="flex gap-3"><i data-lucide="medal" class="w-6 h-6 text-[#C19A6B] flex-shrink-0"></i><div><p class="font-bold">10+ Years Experience</p><p class="text-sm text-gray-500">Proven expertise in tiny home industry</p></div></div>
+                                        <div class="flex gap-3"><i data-lucide="users" class="w-6 h-6 text-[#C19A6B] flex-shrink-0"></i><div><p class="font-bold">500+ Happy Clients</p><p class="text-sm text-gray-500">Trusted by homeowners nationwide</p></div></div>
+                                        <div class="flex gap-3"><i data-lucide="leaf" class="w-6 h-6 text-[#C19A6B] flex-shrink-0"></i><div><p class="font-bold">Eco-Certified</p><p class="text-sm text-gray-500">Sustainable practices guaranteed</p></div></div>
+                                        <div class="flex gap-3"><i data-lucide="shield" class="w-6 h-6 text-[#C19A6B] flex-shrink-0"></i><div><p class="font-bold">Warranty Protected</p><p class="text-sm text-gray-500">Peace of mind with every project</p></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-1">
+                                <div class="bg-[#FEF9F0] dark:bg-gray-800/50 rounded-2xl p-6 sticky top-28">
+                                    <div class="flex items-center gap-3 mb-6"><i data-lucide="${service.icon}" class="w-8 h-8 text-[#C19A6B]"></i><h3 class="text-xl font-bold">Key Features</h3></div>
+                                    <ul class="feature-list space-y-3">${featuresHtml}</ul>
+                                    <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700"><a href="contact.html" class="block text-center bg-[#C19A6B] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#A87B4A] transition mb-3">Get Started Today</a><p class="text-xs text-center text-gray-500">Free consultation • No obligation</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="py-16 bg-[#1A2A1A]">
+                    <div class="container mx-auto px-4 text-center">
+                        <i data-lucide="message-circle" class="w-12 h-12 text-[#C19A6B] mx-auto mb-4"></i>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Your Tiny Home Journey?</h2>
+                        <p class="text-gray-300 max-w-2xl mx-auto mb-8">Let's bring your vision to life. Contact us today for a personalized consultation.</p>
+                        <a href="contact.html" class="inline-flex items-center gap-2 bg-[#C19A6B] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#A87B4A] transition transform hover:scale-105">Schedule Free Consultation <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+                    </div>
+                </section>
+            `;
+            
+            setTimeout(() => lucide.createIcons(), 100);
+        }
+        
+        function toggleDropdown(menuId, e) { if(e) e.stopPropagation(); document.querySelectorAll('.dropdown-content').forEach(d => { if(d.id !== menuId) d.classList.remove('show'); }); const m = document.getElementById(menuId); if(m) m.classList.toggle('show'); }
+        window.addEventListener('click', () => { document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show')); });
+        function toggleMobileMenu() { const mm = document.getElementById('mobileMenu'); mm.classList.toggle('open'); document.body.classList.toggle('menu-open', mm.classList.contains('open')); }
+        function toggleMobileSubmenu(id) { const sub = document.getElementById(id); const parent = sub?.previousElementSibling; const icon = parent?.querySelector('i[data-lucide="chevron-down"]'); sub.classList.toggle('open'); if(icon) icon.style.transform = sub.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; setTimeout(() => lucide.createIcons(), 10); }
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); setTimeout(() => lucide.createIcons(), 10); }
+        function toggleDirection() { const html = document.documentElement; const dirTextDesktop = document.getElementById('dirTextDesktop'); const mobileDirText = document.getElementById('mobileDirText'); if (html.dir === 'rtl') { html.dir = 'ltr'; if(dirTextDesktop) dirTextDesktop.innerText = 'LTR'; if(mobileDirText) mobileDirText.innerText = 'LTR'; } else { html.dir = 'rtl'; if(dirTextDesktop) dirTextDesktop.innerText = 'RTL'; if(mobileDirText) mobileDirText.innerText = 'RTL'; } setTimeout(() => { lucide.createIcons(); }, 50); }
+        function toggleDirectionMobile() { toggleDirection(); }
+        
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            renderServiceDetail();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

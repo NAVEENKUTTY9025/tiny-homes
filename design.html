@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>TinyCraft | Tiny Home Designs & Floorplans</title>
+    <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=64&h=64&fit=crop">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #FFFFFF;
+            --text-primary: #111111;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --nav-bg: #FFFFFF;
+            --footer-bg: #FFFFFF;
+            --footer-text: #4B5563;
+        }
+        
+        .dark {
+            --bg-primary: #0F0F0F;
+            --text-primary: #F5F5F5;
+            --card-bg: #1F1F1F;
+            --border-color: #2A2A2A;
+            --nav-bg: #1A1A1A;
+            --footer-bg: #0A0A0A;
+            --footer-text: #9CA3AF;
+        }
+        
+        body { 
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        .logo-icon, .logo-text { color: #C19A6B !important; }
+        .logo-brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 900; letter-spacing: -0.02em; text-decoration: none; }
+        
+        nav .bg-white\/95 { background-color: var(--nav-bg) !important; backdrop-filter: blur(12px); border: 1px solid rgba(193, 154, 107, 0.2) !important; }
+        .dark nav .bg-white\/95 { background-color: #1A1A1A !important; }
+        
+        .nav-link {
+            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 8px 16px; border-radius: 8px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 6px; color: var(--text-primary) !important; white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active { background-color: #C19A6B !important; color: white !important; }
+        
+        .desktop-control-btn {
+            display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px;
+            border-radius: 8px; font-size: 13px; font-weight: 600;
+            background: rgba(163, 177, 138, 0.2); transition: all 0.3s ease; cursor: pointer; color: var(--text-primary);
+        }
+        .desktop-control-btn:hover { background: rgba(193, 154, 107, 0.3); }
+        
+        h1, h2, h3, h4, .text-\[\#C19A6B\] { color: #C19A6B !important; }
+        .bg-\[\#C19A6B\] { background-color: #C19A6B !important; }
+        .bg-\[\#C19A6B\]:hover { background-color: #A87B4A !important; }
+        
+        footer {
+            background-color: var(--footer-bg) !important;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+        footer .logo-icon, footer .logo-text { color: #C19A6B !important; }
+        footer h4 { color: #C19A6B !important; font-weight: 800; letter-spacing: 0.05em; }
+        footer p, footer li, footer span, footer .text-gray-400, footer .text-gray-500 { color: var(--footer-text) !important; }
+        footer a { color: var(--footer-text) !important; transition: color 0.2s ease; }
+        footer a:hover { color: #C19A6B !important; }
+        footer .border-t { border-color: var(--border-color) !important; }
+        .contact-item i { color: #C19A6B !important; }
+        
+        [dir="rtl"] { text-align: right; direction: rtl; }
+        [dir="rtl"] .flex, [dir="rtl"] .inline-flex, [dir="rtl"] .flex-row { flex-direction: row-reverse; }
+        [dir="rtl"] .text-left { text-align: right; }
+        
+        #mobileMenu {
+            position: fixed; top: 0; bottom: 0; width: 320px;
+            background-color: var(--card-bg) !important; z-index: 110;
+            padding: 1.5rem; overflow-y: auto; transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+        }
+        html:not([dir="rtl"]) #mobileMenu { right: 0; left: auto; transform: translateX(100%); }
+        html[dir="rtl"] #mobileMenu { left: 0; right: auto; transform: translateX(-100%); }
+        #mobileMenu.open { transform: translateX(0) !important; }
+        
+        /* Responsive breakpoints: hide desktop nav links & controls on tablet & mobile, show hamburger */
+        @media (max-width: 1279px) {
+            .desktop-nav-links {
+                display: none !important;
+            }
+            .desktop-controls-wrapper {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .desktop-nav-links {
+                display: flex !important;
+            }
+            .desktop-controls-wrapper {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+        
+        .dropdown-content { display: none; background-color: var(--card-bg) !important; border: 1px solid var(--border-color); }
+        .dropdown-content.show { display: block; }
+        
+        .mobile-nav-link {
+            font-size: 14px; font-weight: 600; padding: 12px 16px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: space-between; width: 100%;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-primary) !important; background: transparent; border: none; cursor: pointer;
+        }
+        .mobile-nav-link:hover { background-color: #C19A6B !important; color: white !important; }
+        .mobile-submenu { display: none; flex-direction: column; padding-left: 1rem; border-left: 2px solid rgba(193, 154, 107, 0.4); }
+        [dir="rtl"] .mobile-submenu { padding-left: 0; padding-right: 1rem; border-left: none; border-right: 2px solid rgba(193, 154, 107, 0.4); }
+        .mobile-submenu.open { display: flex; }
+        .control-btn { width: 100%; padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; background: rgba(193, 154, 107, 0.1); border: 1px solid rgba(193, 154, 107, 0.2); cursor: pointer; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out; }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .design-card-vertical {
+            background: linear-gradient(145deg, var(--card-bg) 0%, rgba(193,154,107,0.03) 100%);
+        }
+        .arch-line {
+            width: 60px; height: 3px; background: #C19A6B; margin: 1rem 0;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+    </style>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#C19A6B', sage: '#A3B18A' } } } }
+    </script>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION BAR (Fixed alignment for all resolutions) ===== -->
+   <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
+            <a href="#" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 logo-icon"></i>
+                <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            
+            <!-- Desktop Navigation Links -->
+           <div class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <div class="relative"><button onclick="toggleDropdown('homeMenu', event)" class="nav-link">Home <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
+                    <div id="homeMenu" class="dropdown-content absolute top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden">
+                        <a href="index.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home1</a>
+                        <a href="about.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="ourhomes.html" class="nav-link">Our Homes</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="design.html" class="nav-link active">Designs</a>
+                <a href="faq.html" class="nav-link ">Faq</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <!-- Desktop Controls: RTL, Dark Mode, Login/Signup (Visible only on desktop) -->
+            <div class="desktop-controls-wrapper hidden xl:flex items-center gap-2">
+                <!-- RTL Toggle -->
+                <button onclick="toggleDirection()" class="desktop-control-btn">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    <span id="dirTextDesktop">LTR</span>
+                </button>
+                
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()" class="desktop-control-btn">
+                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+                    <span class="dark:hidden">Dark</span>
+                    <span class="hidden dark:inline">Light</span>
+                </button>
+                
+                <!-- Login/Signup Dropdown -->
+                <div class="relative">
+                    <button onclick="toggleDropdown('userMenuDesktop', event)" class="desktop-control-btn">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span>Account</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div id="userMenuDesktop" class="dropdown-content absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden z-50">
+                        <a href="login.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">LOGIN</a>
+                        <a href="register.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">SIGNUP</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn xl:hidden p-2 sm:p-2.5 text-black dark:text-white bg-sage/20 rounded-lg hover:bg-sage/40 transition">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+    <!-- MOBILE MENU (off-canvas) -->
+    <div id="mobileMenu" class="bg-white dark:bg-gray-900 shadow-2xl">
+        <div class="flex justify-between items-center mb-6">
+            <a href="#" class="logo-brand flex items-center gap-2">
+                <i data-lucide="home" class="w-7 h-7 logo-icon"></i>
+                <span class="text-2xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+            </a>
+            <button onclick="toggleMobileMenu()" class="p-2 bg-sage/20 rounded-full hover:bg-sage/40">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <button onclick="toggleMobileSubmenu('mobileHomeSub')" class="mobile-nav-link">
+            <span>Home</span> <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </button>
+        <div id="mobileHomeSub" class="mobile-submenu">
+            <a href="index.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home1</a>
+            <a href="home2.html" class="block py-3 px-4 text-sm font-medium rounded-lg">Home2</a>
+        </div>
+        <a href="about.html" class="mobile-nav-link">About</a>
+        <a href="ourhomes.html" class="mobile-nav-link">Our Homes</a>
+        <a href="service.html" class="mobile-nav-link">Services</a>
+        <a href="blog.html" class="mobile-nav-link">Blog</a>
+        <a href="design.html" class="mobile-nav-link bg-[#C19A6B]/20 text-[#C19A6B]">Designs</a>
+        <a href="faq.html" class="mobile-nav-link">Faq</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+        
+        <div class="h-px bg-sage/30 my-3"></div>
+        
+        <div class="control-btn" onclick="toggleMobileSubmenu('mobileAuthSub')">
+            <span class="font-semibold text-sm flex items-center gap-2">
+                <i data-lucide="user-circle" class="w-4 h-4"></i> Account
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+        </div>
+        <div id="mobileAuthSub" class="mobile-submenu">
+            <a href="login.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium">
+                <i data-lucide="log-in" class="w-4 h-4"></i> Login
+            </a>
+            <a href="register.html" class="flex items-center gap-2 py-3 px-4 text-sm font-medium">
+                <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up
+            </a>
+        </div>
+        
+        <div class="control-btn" onclick="toggleDirectionMobile()">
+            <span class="font-semibold text-sm flex items-center gap-2">
+                <i data-lucide="arrow-left-right" class="w-4 h-4"></i> RTL Mode
+            </span>
+            <span id="mobileDirText" class="text-xs font-bold bg-sage/20 px-2 py-1 rounded">LTR</span>
+        </div>
+        
+        <div class="control-btn" onclick="toggleTheme()">
+            <span class="font-semibold text-sm flex items-center gap-2">
+                <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+                Dark Mode
+            </span>
+            <span class="text-xs bg-sage/20 px-2 py-1 rounded">🌓</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: HERO - Design Studio Concept -->
+    <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-24">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&h=1080&fit=crop" class="w-full h-full object-cover" alt="Tiny home interior design">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/40"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="max-w-3xl mx-auto fade-in-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C19A6B]/40 backdrop-blur-sm border border-[#C19A6B]/60 text-white mx-auto mb-6">
+                    <i data-lucide="pencil-ruler" class="w-4 h-4"></i>
+                    <span class="text-xs font-bold uppercase tracking-wider">Architectural Studio</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-white leading-tight">Design Your <span class="text-[#C19A6B]">Tiny Sanctuary</span></h1>
+                <p class="text-white/90 text-lg mt-6 max-w-2xl mx-auto">Explore our curated collection of floor plans, interior concepts, and custom design solutions. Every square inch thoughtfully crafted.</p>
+                <div class="mt-8 flex flex-wrap gap-4 justify-center"><a href="#designs" class="px-8 py-4 bg-[#C19A6B] text-white rounded-xl font-bold hover:bg-[#A87B4A] transition-all inline-flex items-center gap-2">Browse Designs <i data-lucide="arrow-down"></i></a></div>
+            </div>
+        </div>
+        <div class="wave-bg absolute bottom-0 left-0 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" fill="var(--bg-primary)"><path fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path></svg>
+        </div>
+    </section>
+
+    <!-- SECTION 2: FLOOR PLAN MASTERPIECE - Split Layout with Blueprint Style -->
+    <section id="designs" class="py-24 relative" style="background: linear-gradient(135deg, var(--bg-primary) 0%, rgba(193,154,107,0.05) 100%);">
+        <div class="container mx-auto px-6 max-w-[1400px]">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1 space-y-6">
+                    <div class="arch-line"></div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold">The Loft Harmony <span class="text-gray-500 text-2xl">| 2-in-1 Flex Space</span></h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg">An award-winning layout that transforms a 320 sqft footprint into a spacious 2-bedroom home. Features a hydraulic loft system that doubles as office or guest room.</p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="flex items-center gap-3 border-b border-[#C19A6B]/30 pb-2"><i data-lucide="maximize-2" class="text-[#C19A6B]"></i><span>320 sqft + 100 sqft loft</span></div>
+                        <div class="flex items-center gap-3 border-b border-[#C19A6B]/30 pb-2"><i data-lucide="bed-double" class="text-[#C19A6B]"></i><span>Sleeps 4 adults</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="kitchen" class="text-[#C19A6B]"></i><span>Full kitchen island</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="droplets" class="text-[#C19A6B]"></i><span>Wet bath + composting toilet</span></div>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-2 mt-6 text-[#C19A6B] font-bold border-b-2 border-[#C19A6B] pb-1">Download 3D Floorplan →</a>
+                </div>
+                <div class="order-1 lg:order-2 relative group">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop" class="rounded-2xl shadow-2xl w-full h-[500px] object-cover border-4 border-white/20 transition-transform duration-700 group-hover:scale-[1.02]" alt="Floor plan design">
+                    <div class="absolute -bottom-4 -left-4 bg-[#C19A6B] text-white px-5 py-2 rounded-xl shadow-lg font-bold text-sm">⭐ Signature Design</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTERIOR CONCEPT - Full Width Immersive Gallery -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&h=800&fit=crop" class="w-full h-full object-cover" alt="Scandinavian tiny interior">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#1A2A1A]/90 to-black/70"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 text-white text-center">
+            <i data-lucide="sparkles" class="w-14 h-14 text-[#C19A6B] mx-auto mb-4"></i>
+            <h2 class="text-4xl md:text-5xl font-black">Scandinavian Minimalism</h2>
+            <p class="text-xl max-w-2xl mx-auto mt-4 text-white/90">Light oak finishes, white walls, and strategic natural light — our signature Nordic concept maximizes space perception.</p>
+            <div class="flex flex-wrap justify-center gap-6 mt-10">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl px-6 py-3"><i data-lucide="sun" class="inline w-5 mr-2"></i> Passive Solar</div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl px-6 py-3"><i data-lucide="tree-pine" class="inline w-5 mr-2"></i> FSC-Certified Wood</div>
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl px-6 py-3"><i data-lucide="ruler" class="inline w-5 mr-2"></i> Custom Millwork</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: BENTO GRID - Design Concepts Gallery (6 Unique Concepts) -->
+    <section class="py-24" style="background-color: var(--bg-primary);">
+        <div class="container mx-auto px-6 max-w-[1400px]">
+            <div class="text-center mb-14">
+                <i data-lucide="palette" class="w-12 h-12 text-[#C19A6B] mx-auto"></i>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Design Concepts Gallery</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Six unique interior philosophies for tiny living</p>
+            </div>
+            <div class="bento-grid">
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Wabi-Sabi"><div class="p-5"><h3 class="font-bold text-xl">Wabi-Sabi Loft</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Imperfect beauty, raw textures, handmade ceramics</p></div></div>
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Japandi"><div class="p-5"><h3 class="font-bold text-xl">Japandi Haven</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Japanese minimalism meets Scandinavian warmth</p></div></div>
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Industrial Rustic"><div class="p-5"><h3 class="font-bold text-xl">Industrial Rustic</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Exposed steel, reclaimed barnwood, Edison lighting</p></div></div>
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Coastal Breeze"><div class="p-5"><h3 class="font-bold text-xl">Coastal Breeze</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Whitewashed walls, navy accents, airy layouts</p></div></div>
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Bohemian Earth"><div class="p-5"><h3 class="font-bold text-xl">Bohemian Earth</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Macrame, terracotta, indoor plant walls</p></div></div>
+                <div class="bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&h=350&fit=crop" class="w-full h-56 object-cover" alt="Smart Tech"><div class="p-5"><h3 class="font-bold text-xl">Smart Tech Studio</h3><p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Motorized furniture, app-controlled lighting</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: 3D RENDER SHOWCASE - Immersive Split -->
+    <section class="py-24 relative" style="background: linear-gradient(120deg, rgba(193,154,107,0.05) 0%, var(--bg-primary) 100%);">
+        <div class="container mx-auto px-6 max-w-[1400px]">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="relative order-2 md:order-1">
+                    <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&h=500&fit=crop" class="rounded-3xl shadow-2xl w-full h-[450px] object-cover" alt="3D render tiny home">
+                    <div class="absolute -top-4 -right-4 bg-[#C19A6B] text-white p-3 rounded-full"><i data-lucide="camera" class="w-6 h-6"></i></div>
+                </div>
+                <div class="order-1 md:order-2 space-y-5">
+                    <div class="inline-block px-4 py-1.5 bg-[#C19A6B]/10 rounded-full text-[#C19A6B] font-bold">3D Visualization</div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold">Photorealistic Renderings</h2>
+                    <p class="text-gray-600 dark:text-gray-400">See your dream home before it's built. Our architectural team creates detailed 3D walkthroughs with material accuracy, lighting simulation, and VR compatibility.</p>
+                    <ul class="space-y-3">
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[#C19A6B]"></i><span>Virtual reality tours included with custom designs</span></li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[#C19A6B]"></i><span>Material swatches and finish previews</span></li>
+                        <li class="flex gap-3"><i data-lucide="check-circle-2" class="text-[#C19A6B]"></i><span>Sun path analysis for optimal window placement</span></li>
+                    </ul>
+                    <a href="#" class="inline-flex items-center gap-2 mt-4 bg-[#C19A6B] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#A87B4A] transition">Request a 3D Preview →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CUSTOM DESIGN PROCESS - Horizontal Steps -->
+    <section class="py-24" style="background: linear-gradient(120deg, rgba(193,154,107,0.08) 0%, var(--bg-primary) 100%);">
+        <div class="container mx-auto px-6 max-w-[1300px]">
+            <div class="text-center mb-14">
+                <i data-lucide="compass" class="w-12 h-12 text-[#C19A6B] mx-auto"></i>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">Your Custom Design Journey</h2>
+                <p class="text-gray-500 dark:text-gray-400">From concept to keys — our proven 4-step process</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center p-6 rounded-2xl bg-white dark:bg-gray-800/40 shadow-lg hover:shadow-xl transition"><div class="w-16 h-16 bg-[#C19A6B]/10 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-black text-[#C19A6B]">01</span></div><h3 class="font-bold text-xl">Discovery Call</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Share your vision, lifestyle needs, and budget</p></div>
+                <div class="text-center p-6 rounded-2xl bg-white dark:bg-gray-800/40 shadow-lg hover:shadow-xl transition"><div class="w-16 h-16 bg-[#C19A6B]/10 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-black text-[#C19A6B]">02</span></div><h3 class="font-bold text-xl">Concept Sketches</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Hand-drawn layouts + 3D mood boards within 2 weeks</p></div>
+                <div class="text-center p-6 rounded-2xl bg-white dark:bg-gray-800/40 shadow-lg hover:shadow-xl transition"><div class="w-16 h-16 bg-[#C19A6B]/10 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-black text-[#C19A6B]">03</span></div><h3 class="font-bold text-xl">Technical Drawings</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Permit-ready blueprints, structural engineering</p></div>
+                <div class="text-center p-6 rounded-2xl bg-white dark:bg-gray-800/40 shadow-lg hover:shadow-xl transition"><div class="w-16 h-16 bg-[#C19A6B]/10 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-2xl font-black text-[#C19A6B]">04</span></div><h3 class="font-bold text-xl">Build & Delivery</h3><p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Craftsmanship + final walkthrough, 12-14 weeks</p></div>
+            </div>
+            <div class="text-center mt-12"><a href="#" class="inline-flex items-center gap-2 border-2 border-[#C19A6B] text-[#C19A6B] px-8 py-3 rounded-xl font-bold hover:bg-[#C19A6B] hover:text-white transition">Start Your Design →</a></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-gray-900 pt-16 pb-8">
+        <div class="container mx-auto px-4 md:px-8 max-w-[1300px]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <a href="index.html" class="logo-brand flex items-center gap-2">
+                        <i data-lucide="home" class="w-8 h-8 logo-icon"></i>
+                        <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+                    </a>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Designing sustainable tiny homes with soul — natural wood, earthy tones, and modern minimalism.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Company</h4>
+                   <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">About Us</a></li>
+                        <li><a href="ourhomes.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Our Homes</a></li>
+                        <li><a href="service.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Services</a></li>
+                        <li><a href="contact.html" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Tiny Home Guide</a></li>
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Financing Options</a></li>
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Workshops</a></li>
+                        <li><a href="#" class="text-gray-500 dark:text-gray-400 hover:text-[#C19A6B] transition-colors text-sm font-medium">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-black uppercase tracking-widest text-[#C19A6B] mb-6">Contact</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-start contact-item">
+                            <i data-lucide="phone" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">+1 (888) 553-9842</span>
+                        </li>
+                        <li class="flex gap-3 items-start contact-item">
+                            <i data-lucide="mail" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">hello@tinycraft.com</span>
+                        </li>
+                        <li class="flex gap-3 items-start contact-item">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-[#C19A6B] shrink-0 mt-0.5"></i>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">Portland, OR & Remote</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 dark:text-gray-500 text-xs font-medium">© 2026 TinyCraft — Sustainable Tiny Home Builders. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Terms of Service</a>
+                    <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-[#C19A6B] transition-colors text-xs font-medium">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        function toggleDropdown(menuId, e) { if(e) e.stopPropagation(); document.querySelectorAll('.dropdown-content').forEach(d => { if(d.id !== menuId) d.classList.remove('show'); }); const m = document.getElementById(menuId); if(m) m.classList.toggle('show'); }
+        window.addEventListener('click', () => { document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show')); });
+        function toggleMobileMenu() { const mm = document.getElementById('mobileMenu'); mm.classList.toggle('open'); document.body.classList.toggle('menu-open', mm.classList.contains('open')); }
+        function toggleMobileSubmenu(id) { const sub = document.getElementById(id); const parentBtn = sub?.previousElementSibling; const icon = parentBtn?.querySelector('i[data-lucide="chevron-down"]'); sub?.classList.toggle('open'); if(icon) icon.style.transform = sub.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; setTimeout(() => lucide.createIcons(), 10); }
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); setTimeout(() => lucide.createIcons(), 10); }
+        function toggleDirection() { const html = document.documentElement; const dirTextDesktop = document.getElementById('dirTextDesktop'); const mobileDirText = document.getElementById('mobileDirText'); if (html.dir === 'rtl') { html.dir = 'ltr'; if(dirTextDesktop) dirTextDesktop.innerText = 'LTR'; if(mobileDirText) mobileDirText.innerText = 'LTR'; } else { html.dir = 'rtl'; if(dirTextDesktop) dirTextDesktop.innerText = 'RTL'; if(mobileDirText) mobileDirText.innerText = 'RTL'; } setTimeout(() => { lucide.createIcons(); }, 50); }
+        function toggleDirectionMobile() { toggleDirection(); }
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('dark'); }
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+    </script>
+</body>
+</html>

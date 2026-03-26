@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TinyCraft | Register - Join Tiny Living Movement</title>
+    <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=64&h=64&fit=crop">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        /* Light mode (default) */
+        :root {
+            --bg-primary: #FFFFFF;
+            --text-primary: #111111;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --input-bg: #FFFFFF;
+        }
+        
+        /* Dark mode */
+        .dark {
+            --bg-primary: #0F0F0F;
+            --text-primary: #F5F5F5;
+            --card-bg: #1F1F1F;
+            --border-color: #2A2A2A;
+            --input-bg: #2A2A2A;
+        }
+        
+        body { 
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        
+        /* Brand colors - EXACT MATCH with index.html */
+        .logo-icon, .logo-text {
+            color: #C19A6B !important;
+        }
+        
+        .logo-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+        
+        /* Logo size matching index.html - w-7 h-7 for icon, text-2xl for text */
+        .logo-icon {
+            width: 1.75rem !important;
+            height: 1.75rem !important;
+        }
+        
+        .logo-text-brand {
+            font-size: 1.5rem !important;
+            line-height: 2rem !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.02em;
+        }
+        
+        @media (min-width: 640px) {
+            .logo-icon {
+                width: 2rem !important;
+                height: 2rem !important;
+            }
+            .logo-text-brand {
+                font-size: 1.875rem !important;
+                line-height: 2.25rem !important;
+            }
+        }
+        
+        /* Theme Controls Container - Fixed Top Right Corner */
+        .theme-controls-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(193, 154, 107, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* RTL Support - adjust controls position */
+        [dir="rtl"] .theme-controls-container {
+            right: auto;
+            left: 20px;
+        }
+        
+        .control-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            color: white;
+            border: none;
+        }
+        
+        .control-btn:hover {
+            background: #C19A6B;
+            transform: translateY(-1px);
+        }
+        
+        .dark .control-btn {
+            background: rgba(0, 0, 0, 0.6);
+            color: #F5F5F5;
+        }
+        
+        .dark .control-btn:hover {
+            background: #C19A6B;
+            color: white;
+        }
+        
+        /* Card styles - FIXED HEIGHT NO SCROLL */
+        .register-card {
+            background-color: var(--card-bg);
+            border-radius: 1.75rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 440px;
+            height: auto;
+            overflow: hidden;
+            animation: fadeInScale 0.4s ease-out;
+        }
+        
+        .card-content {
+            padding: 1.5rem 1.75rem;
+        }
+        
+        /* Input styles - TIGHTENED */
+        .input-field {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        
+        .input-field:focus {
+            border-color: #C19A6B;
+            box-shadow: 0 0 0 2px rgba(193, 154, 107, 0.2);
+        }
+        
+        .input-field::placeholder {
+            color: #9CA3AF;
+            font-weight: 400;
+            font-size: 12px;
+        }
+        
+        /* Button primary */
+        .btn-primary {
+            background-color: #C19A6B;
+            color: white;
+            font-weight: 700;
+            padding: 11px 20px;
+            border-radius: 40px;
+            width: 100%;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #A87B4A;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(193, 154, 107, 0.25);
+        }
+        
+        /* Social icons - TIGHT */
+        .social-icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 12px;
+        }
+        
+        .social-icon-btn:hover {
+            background: rgba(193, 154, 107, 0.1);
+            border-color: #C19A6B;
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .divider::before {
+            margin-right: 0.75rem;
+        }
+        
+        .divider::after {
+            margin-left: 0.75rem;
+        }
+        
+        [dir="rtl"] .divider::before {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+        
+        [dir="rtl"] .divider::after {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+        
+        /* Links */
+        .link-primary {
+            color: #C19A6B;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .link-primary:hover {
+            text-decoration: underline;
+        }
+        
+        /* Password strength bar - COMPACT */
+        .strength-bar-container {
+            margin-top: 6px;
+        }
+        .strength-bar {
+            height: 3px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            background-color: var(--border-color);
+            width: 0%;
+        }
+        .strength-text {
+            font-size: 9px;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+        
+        /* Checkbox styling */
+        .checkbox-custom {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            accent-color: #C19A6B;
+            margin: 0;
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] {
+            text-align: right;
+            direction: rtl;
+        }
+        
+        /* Background decorative - subtle */
+        .bg-deco {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-deco::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(193,154,107,0.1) 0%, rgba(193,154,107,0) 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -80px;
+        }
+        
+        .bg-deco::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(163,177,138,0.08) 0%, rgba(163,177,138,0) 70%);
+            border-radius: 50%;
+            bottom: -120px;
+            left: -100px;
+        }
+        
+        .dark .bg-deco::before,
+        .dark .bg-deco::after {
+            opacity: 0.5;
+        }
+        
+        /* Animation */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Tight spacing utilities */
+        .space-y-compact > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 0.75rem;
+        }
+        
+        .mb-compact {
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Label style */
+        .form-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-primary);
+        }
+        
+        /* No scroll prevention */
+        .no-scroll {
+            overflow: hidden;
+        }
+        
+        @media (max-width: 480px) {
+            .theme-controls-container {
+                top: 12px;
+                right: 12px;
+                padding: 4px 10px;
+                gap: 6px;
+            }
+            .control-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+            .card-content {
+                padding: 1.25rem 1.5rem;
+            }
+            .register-card {
+                max-width: 92%;
+            }
+            .input-field {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            .btn-primary {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            /* Logo responsive - maintain size */
+            .logo-icon {
+                width: 1.5rem !important;
+                height: 1.5rem !important;
+            }
+            .logo-text-brand {
+                font-size: 1.25rem !important;
+                line-height: 1.75rem !important;
+            }
+        }
+        
+        /* Terms text compact */
+        .terms-text {
+            font-size: 10px;
+            line-height: 1.3;
+            color: var(--text-primary);
+            opacity: 0.7;
+        }
+        
+        /* Flex row for terms */
+        .terms-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        /* Footer badge */
+        .eco-badge {
+            font-size: 9px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.6;
+        }
+    </style>
+    <script>
+        tailwind.config = { 
+            darkMode: 'class', 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        primary: '#C19A6B', 
+                        sage: '#A3B18A' 
+                    } 
+                } 
+            } 
+        }
+    </script>
+</head>
+<body>
+    <!-- Background decorative -->
+    <div class="bg-deco"></div>
+    
+    <!-- Theme Controls - Fixed Top Right Corner (Outside Container) - NO SCROLL -->
+    <div class="theme-controls-container">
+        <button onclick="toggleDirection()" class="control-btn">
+            <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+            <span id="dirText">LTR</span>
+        </button>
+        <button onclick="toggleTheme()" class="control-btn">
+            <i data-lucide="moon" class="w-3.5 h-3.5 dark:hidden"></i>
+            <i data-lucide="sun" class="w-3.5 h-3.5 hidden dark:block text-yellow-300"></i>
+            <span class="dark:hidden">Dark</span>
+            <span class="hidden dark:inline">Light</span>
+        </button>
+    </div>
+    
+    <!-- Register Card - FIXED NO SCROLL, TIGHTENED CONTENT, LOGO SIZE MATCHES INDEX.HTML -->
+    <div class="register-card">
+        <div class="card-content">
+            <!-- Logo Section - EXACT SAME SIZE AS INDEX.HTML (w-7 h-7 icon, text-2xl/sm:text-3xl) -->
+            <div class="text-center mb-3">
+                <a href="index.html" class="logo-brand justify-center">
+                    <i data-lucide="home" class="logo-icon w-7 h-7 sm:w-8 sm:h-8"></i>
+                    <span class="logo-text-brand text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
+                </a>
+                <p class="text-gray-500 dark:text-gray-400 text-xs mt-1.5">Start your tiny living journey</p>
+            </div>
+            
+            <!-- Register Form - TIGHT SPACING -->
+            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-compact">
+                <!-- Full Name -->
+                <div>
+                    <label class="form-label">
+                        <i data-lucide="user" class="w-3.5 h-3.5 text-[#C19A6B]"></i>
+                        Full Name
+                    </label>
+                    <input type="text" id="fullname" class="input-field" placeholder="John Doe" required>
+                </div>
+                
+                <!-- Email Field -->
+                <div>
+                    <label class="form-label">
+                        <i data-lucide="mail" class="w-3.5 h-3.5 text-[#C19A6B]"></i>
+                        Email Address
+                    </label>
+                    <input type="email" id="email" class="input-field" placeholder="hello@tinycraft.com" required>
+                </div>
+                
+                <!-- Password Field -->
+                <div>
+                    <label class="form-label">
+                        <i data-lucide="lock" class="w-3.5 h-3.5 text-[#C19A6B]"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" class="input-field" placeholder="Create password" onkeyup="checkPasswordStrength()" required>
+                    <div class="strength-bar-container">
+                        <div class="strength-bar" id="strengthBar"></div>
+                        <div class="strength-text" id="strengthText"></div>
+                    </div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div>
+                    <label class="form-label">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#C19A6B]"></i>
+                        Confirm Password
+                    </label>
+                    <input type="password" id="confirmPassword" class="input-field" placeholder="Confirm password" required>
+                </div>
+                
+                <!-- Newsletter Checkbox - COMPACT -->
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="newsletter" class="checkbox-custom">
+                    <label for="newsletter" class="text-[10px] text-gray-500 dark:text-gray-400 cursor-pointer">
+                        <i data-lucide="mail" class="w-3 h-3 inline mr-1"></i>
+                        Tiny home inspiration & offers
+                    </label>
+                </div>
+                
+                <!-- Terms and Conditions - TIGHT -->
+                <div class="terms-row">
+                    <input type="checkbox" id="terms" class="checkbox-custom mt-0" required>
+                    <label for="terms" class="terms-text">
+                        I agree to <a href="#" class="link-primary text-[10px]">Terms</a> & <a href="#" class="link-primary text-[10px]">Privacy</a>. I'm 18+.
+                    </label>
+                </div>
+                
+                <!-- Register Button -->
+                <button type="submit" class="btn-primary flex items-center justify-center gap-2 group mt-1">
+                    <span>Create Account</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="divider my-3">
+                <span class="px-2 text-gray-400 dark:text-gray-500 text-[10px]">OR</span>
+            </div>
+            
+            <!-- Social Registration - COMPACT -->
+            <div class="grid grid-cols-2 gap-2 mb-3">
+                <button onclick="socialRegister('google')" class="social-icon-btn">
+                    <i data-lucide="chrome" class="w-3.5 h-3.5"></i>
+                    <span>Google</span>
+                </button>
+                <button onclick="socialRegister('apple')" class="social-icon-btn">
+                    <i data-lucide="apple" class="w-3.5 h-3.5"></i>
+                    <span>Apple</span>
+                </button>
+            </div>
+            
+            <!-- Login Link -->
+            <div class="text-center">
+                <p class="text-xs text-gray-600 dark:text-gray-400">
+                    Already have an account? 
+                    <a href="login.html" class="font-bold link-primary text-xs ml-1">Sign In →</a>
+                </p>
+            </div>
+            
+            <!-- Eco Badge - TIGHT -->
+            <div class="text-center mt-2">
+                <span class="eco-badge text-gray-400 dark:text-gray-500">
+                    <i data-lucide="leaf" class="w-2.5 h-2.5"></i>
+                    5000+ tiny homeowners
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // ========== THEME & RTL FUNCTIONS ==========
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+        
+        function toggleDirection() {
+            const html = document.documentElement;
+            const dirTextSpan = document.getElementById('dirText');
+            if (html.dir === 'rtl') {
+                html.dir = 'ltr';
+                if (dirTextSpan) dirTextSpan.innerText = 'LTR';
+            } else {
+                html.dir = 'rtl';
+                if (dirTextSpan) dirTextSpan.innerText = 'RTL';
+            }
+            setTimeout(() => lucide.createIcons(), 30);
+        }
+        
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        // Password Strength Checker - COMPACT
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            if (!password) {
+                strengthBar.style.width = '0%';
+                strengthBar.style.backgroundColor = 'var(--border-color)';
+                strengthText.innerHTML = '';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            let color = '', text = '', width = '';
+            if (strength <= 1) { color = '#EF4444'; text = 'Weak'; width = '25%'; }
+            else if (strength === 2) { color = '#F59E0B'; text = 'Fair'; width = '50%'; }
+            else if (strength === 3) { color = '#10B981'; text = 'Good'; width = '75%'; }
+            else { color = '#C19A6B'; text = 'Strong'; width = '100%'; }
+            
+            strengthBar.style.backgroundColor = color;
+            strengthBar.style.width = width;
+            strengthText.innerHTML = `<span style="color: ${color}">${text}</span>`;
+        }
+        
+        // Handle Registration
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!fullname || !email || !password || !confirmPassword) {
+                showNotification('Please fill all fields', 'error');
+                return;
+            }
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
+            if (!terms) {
+                showNotification('Accept Terms & Conditions', 'error');
+                return;
+            }
+            const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showNotification('Enter a valid email', 'error');
+                return;
+            }
+            
+            const newsletter = document.getElementById('newsletter').checked;
+            const userData = { fullname, email, registeredAt: new Date().toISOString(), newsletter };
+            localStorage.setItem('tinycraft_user', JSON.stringify(userData));
+            localStorage.setItem('tinycraft_registered', 'true');
+            
+            showNotification(`Welcome ${fullname}! Registration successful.`, 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1200);
+        }
+        
+        function socialRegister(provider) {
+            showNotification(`${provider} sign up (Demo)`, 'info');
+        }
+        
+        // Notification Toast - NO SCROLL AFFECT
+        function showNotification(message, type = 'info') {
+            const existingToast = document.querySelector('.custom-toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast fixed bottom-5 left-1/2 transform -translate-x-1/2 z-[1001] px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 text-xs font-semibold backdrop-blur-md transition-all duration-300';
+            
+            if (type === 'success') {
+                toast.style.backgroundColor = 'rgba(16, 185, 129, 0.95)';
+                toast.style.color = 'white';
+                toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>${message}</span>`;
+            } else if (type === 'error') {
+                toast.style.backgroundColor = 'rgba(239, 68, 68, 0.95)';
+                toast.style.color = 'white';
+                toast.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4"></i><span>${message}</span>`;
+            } else {
+                toast.style.backgroundColor = 'rgba(193, 154, 107, 0.95)';
+                toast.style.color = 'white';
+                toast.innerHTML = `<i data-lucide="info" class="w-4 h-4"></i><span>${message}</span>`;
+            }
+            
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            
+            setTimeout(() => toast.style.opacity = '1', 5);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 250);
+            }, 2500);
+        }
+        
+        // Real-time confirm validation
+        const confirmInput = document.getElementById('confirmPassword');
+        const passwordField = document.getElementById('password');
+        if (confirmInput && passwordField) {
+            function validateMatch() {
+                if (confirmInput.value && passwordField.value !== confirmInput.value) {
+                    confirmInput.style.borderColor = '#EF4444';
+                } else {
+                    confirmInput.style.borderColor = 'var(--border-color)';
+                }
+            }
+            passwordField.addEventListener('keyup', validateMatch);
+            confirmInput.addEventListener('keyup', validateMatch);
+        }
+        
+        // Reinitialize icons on load and mutations
+        document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+        const observer = new MutationObserver(() => lucide.createIcons());
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'dir'] });
+        
+        // Ensure body has no scroll
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+    </script>
+</body>
+</html>
