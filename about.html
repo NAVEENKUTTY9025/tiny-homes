@@ -212,14 +212,39 @@
         .fade-in-up { animation: fadeInUp 0.8s ease-out; }
         body.menu-open { overflow: hidden; }
         
-        .wave-bg {
-            position: absolute;
+        /* FIXED: Wave container now with proper spacing and positioning to not overlap text */
+        .wave-container {
+            position: relative;
+            margin-top: -2px; /* small adjustment to avoid tiny gap */
+            line-height: 0;
+        }
+        .hero-wave {
+            position: relative;
             bottom: 0;
             left: 0;
             width: 100%;
             overflow: hidden;
             line-height: 0;
+            transform: translateY(0);
         }
+        
+        /* Ensure hero section has enough bottom padding so wave doesn't touch text */
+        .hero-section {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 6rem; /* pt-24 equivalent */
+            padding-bottom: 3rem; /* Added bottom padding to separate content from wave */
+        }
+        @media (min-width: 768px) {
+            .hero-section {
+                padding-bottom: 5rem;
+            }
+        }
+        
+        /* Wave SVG fill uses CSS variable for dynamic theme */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -268,7 +293,7 @@
 </head>
 <body>
 
-    <!-- ===== NAVIGATION BAR (Fixed alignment for all resolutions, hamburger visible on 1024x1366 & 1024x768) ===== -->
+    <!-- ===== NAVIGATION BAR ===== -->
    <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
         <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
             <a href="#" class="logo-brand flex items-center gap-2">
@@ -390,8 +415,8 @@
         </div>
     </div>
 
-    <!-- SECTION 1: HERO -->
-    <section class="relative min-h-[70vh] flex items-center overflow-hidden pt-24">
+    <!-- SECTION 1: HERO - FIXED: Added padding-bottom to create gap between text and wave, adjusted wave position -->
+    <section class="hero-section relative min-h-[75vh] flex items-center overflow-hidden pt-24 pb-16 md:pb-24">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=1920&h=800&fit=crop" class="w-full h-full object-cover" alt="Tiny home community">
             <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
@@ -402,10 +427,13 @@
                 <span class="text-xs font-bold uppercase tracking-wider">Our Story Since 2013</span>
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6 drop-shadow-lg">Crafting <span class="text-[#C19A6B]">Small Spaces</span><br>with Infinite Soul</h1>
-            <p class="text-xl max-w-2xl mx-auto text-white/90">We believe tiny living is the ultimate expression of freedom, sustainability, and intentional design.</p>
+            <p class="text-xl max-w-2xl mx-auto text-white/90 leading-relaxed">We believe tiny living is the ultimate expression of freedom, sustainability, and intentional design.</p>
         </div>
-        <div class="wave-bg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="var(--bg-primary)"><path fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path></svg>
+        <!-- Wave placed at bottom with margin and positioning that doesn't overlap text due to hero bottom padding -->
+        <div class="wave-container absolute bottom-0 left-0 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="var(--bg-primary)" style="display: block; width: 100%; height: auto;">
+                <path fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+            </svg>
         </div>
     </section>
 
