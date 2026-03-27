@@ -269,15 +269,15 @@
 <body>
 
     <!-- ===== NAVIGATION BAR (Fixed alignment for all resolutions, hamburger visible on 1024x1366 & 1024x768) ===== -->
-   <nav class="fixed w-full z-[100] py-3 sm:py-4">
-        <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg mx-3 sm:mx-4 md:mx-6 lg:mx-8">
+   <nav class="fixed w-full z-[100] px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between bg-white/95 dark:bg-black/95 backdrop-blur-xl px-4 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-sage/30 shadow-lg">
             <a href="#" class="logo-brand flex items-center gap-2">
                 <i data-lucide="home" class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 logo-icon"></i>
                 <span class="text-2xl sm:text-3xl font-black tracking-tight"><span class="logo-text">Tiny</span><span class="logo-text">Craft</span></span>
             </a>
             
-            <!-- Desktop Navigation Links (hidden on tablet/1024 widths via media query) -->
-            <div class="desktop-nav-links hidden lg:flex items-center gap-1 xl:gap-2">
+            <!-- Desktop Navigation Links -->
+           <div class="hidden lg:flex items-center gap-1 xl:gap-2">
                 <div class="relative"><button onclick="toggleDropdown('homeMenu', event)" class="nav-link">Home <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i></button>
                     <div id="homeMenu" class="dropdown-content absolute top-full mt-2 w-40 bg-white dark:bg-gray-900 shadow-xl rounded-lg border overflow-hidden">
                         <a href="index.html" class="block px-4 py-2.5 text-xs font-bold hover:bg-[#C19A6B] hover:text-white transition">Home1</a>
@@ -285,26 +285,31 @@
                     </div>
                 </div>
                 <a href="about.html" class="nav-link active">About</a>
-                <a href="ourhomes.html" class="nav-link">Our Homes</a>
+                <a href="ourhomes.html" class="nav-link ">Our Homes</a>
                 <a href="service.html" class="nav-link">Services</a>
                 <a href="blog.html" class="nav-link">Blog</a>
-                <a href="design.html" class="nav-link ">Designs</a>
-                <a href="faq.html" class="nav-link">Faq</a>
+                <a href="design.html" class="nav-link">Designs</a>
+                <a href="faq.html" class="nav-link ">Faq</a>
                 <a href="contact.html" class="nav-link">Contact</a>
             </div>
             
-            <!-- Desktop Controls: RTL, Dark Mode, Login/Signup (visible only on desktop >=1280px) -->
+            <!-- Desktop Controls: RTL, Dark Mode, Login/Signup (Visible only on desktop) -->
             <div class="desktop-controls-wrapper hidden xl:flex items-center gap-2">
+                <!-- RTL Toggle -->
                 <button onclick="toggleDirection()" class="desktop-control-btn">
                     <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
                     <span id="dirTextDesktop">LTR</span>
                 </button>
+                
+                <!-- Dark Mode Toggle -->
                 <button onclick="toggleTheme()" class="desktop-control-btn">
                     <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
                     <span class="dark:hidden">Dark</span>
                     <span class="hidden dark:inline">Light</span>
                 </button>
+                
+                <!-- Login/Signup Dropdown -->
                 <div class="relative">
                     <button onclick="toggleDropdown('userMenuDesktop', event)" class="desktop-control-btn">
                         <i data-lucide="user" class="w-4 h-4"></i>
@@ -318,8 +323,8 @@
                 </div>
             </div>
             
-            <!-- Mobile Menu Button (visible on screens below 1280px, including 1024x1366 and 1024x768) -->
-            <button onclick="toggleMobileMenu()" class="mobile-menu-btn xl:hidden p-2 sm:p-2.5 text-black dark:text-white bg-sage/20 rounded-lg hover:bg-sage/40 transition flex items-center justify-center">
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="mobile-menu-btn xl:hidden p-2 sm:p-2.5 text-black dark:text-white bg-sage/20 rounded-lg hover:bg-sage/40 transition">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
         </div>
